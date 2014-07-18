@@ -13,12 +13,46 @@
                 "element": {"#": "main"}
             }
         },
+        "actionEventListener": {
+            "prototype": "montage/core/event/action-event-listener",
+            "properties": {
+                "action": "addContent",
+                "handler": {"@": "tasksController"}
+            },
+            "_dev": {
+                "isHidden": true
+            }
+        },
         "addTaskButton": {
             "prototype": "digit/ui/button.reel",
             "properties": {
                 "element": {"#": "addTaskButton"},
                 "enabled": true,
                 "label": "Add Task"
+            },
+            "listeners": [
+                {
+                    "type": "action",
+                    "listener": {"@": "actionEventListener"}
+                }
+            ]
+        },
+        "badge": {
+            "prototype": "digit/ui/badge.reel",
+            "properties": {
+                "element": {"#": "badge"}
+            },
+            "bindings": {
+                "value": {"<-": "@tasksController.organizedContent.filter{!completed}.length"}
+            }
+        },
+        "taskCell1": {
+            "prototype": "ui/task-cell.reel",
+            "properties": {
+                "element": {"#": "taskCell1"}
+            },
+            "bindings": {
+                "task": {"<-": "@taskList:iteration.object"}
             }
         },
         "taskList": {
@@ -45,8 +79,9 @@
     <div data-montage-id="main" data-montage-skin="light" class="Main">
         <h1 data-montage-id="title"></h1>
         <button data-montage-id="addTaskButton"></button>
+        <output data-montage-id="badge"></output>
         <ul data-montage-id="taskList">
-            <li></li>
+            <li data-montage-id="taskCell1"></li>
         </ul>
     </div>
 </body>
